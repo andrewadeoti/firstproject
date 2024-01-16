@@ -85,4 +85,92 @@ public static void Mv(String source, String destination) throws IOException{
                 System.out.println(line);
     }}}
 
+public static void cp() throws IOException{
+                
+        var processBuilder = new ProcessBuilder();
+
+        processBuilder.command("cp");
+        
+
+        var process = processBuilder.start();
+
+        try (var reader = new BufferedReader(
+            new InputStreamReader(process.getInputStream()))) {
+
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line);
+    }}}
+public static void mkdir() throws IOException{
+                
+        var processBuilder = new ProcessBuilder();
+
+        processBuilder.command("mkdir");
+        
+
+        var process = processBuilder.start();
+
+        try (var reader = new BufferedReader(
+            new InputStreamReader(process.getInputStream()))) {
+
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line);
+    }}}
+
+public static void ps(String source, String destination) throws IOException{
+                
+        var processBuilder = new ProcessBuilder();
+
+        processBuilder.command("ps", source ,destination  );
+        
+
+        var process = processBuilder.start();
+
+        try (var reader = new BufferedReader(
+            new InputStreamReader(process.getInputStream()))) {
+
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line);
+    }}}
+
+ public static void whoami() throws IOException{
+                
+        var processBuilder = new ProcessBuilder();
+
+        processBuilder.command("whoami");
+        
+
+        var process = processBuilder.start();
+
+        try (var reader = new BufferedReader(
+            new InputStreamReader(process.getInputStream()))) {
+
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line);
+    }}}
+public static void nano() throws IOException{
+                
+        var processBuilder = new ProcessBuilder();
+
+        processBuilder.command("nano");
+        
+
+        var process = processBuilder.start();
+
+        try (var reader = new BufferedReader(
+            new InputStreamReader(process.getInputStream()))) {
+
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line);
+    }}}
+
 }
