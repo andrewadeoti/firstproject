@@ -16,9 +16,24 @@ import javafx.stage.Stage;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
+import javafx.scene.control.Label;
 
 public class PrimaryController {
 
+    //Console area playground/////////
+    @FXML 
+    private Button consoleBtn;
+    
+    @FXML
+    private TextField consoleIn;
+    
+    @FXML
+    private TextField Destination;
+    
+    @FXML
+    private Label consoleOut;
+    
+    //Console area playground/////////
     @FXML
     private Button registerBtn;
 
@@ -88,5 +103,36 @@ public class PrimaryController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    
+    @FXML
+    private void openConsole(ActionEvent event) throws IOException, InterruptedException
+    {
+//        var processBuilder = new ProcessBuilder();
+//
+//        processBuilder.command("terminator");
+//
+//        var process = processBuilder.start();
+//
+//        var ret = process.waitFor();
+//
+//        System.out.printf("Program exited with code: %d", ret);
+        
+        var console = new ConsoleInput();
+        
+        String input =consoleIn.getText();
+        String output;
+        
+        if ("ls"==input)
+        {
+            output=console.Ls();
+            consoleOut.setText(output);
+        }
+        else
+        {
+            output=console.Ls();
+        }
+        consoleIn.clear();
+        
     }
 }
