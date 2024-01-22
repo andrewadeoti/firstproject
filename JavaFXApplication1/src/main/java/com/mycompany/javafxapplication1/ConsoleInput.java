@@ -14,7 +14,8 @@ import java.io.InputStreamReader;
 public class ConsoleInput {
 
     /*
--mv
+- makeFile
+- mv
 - cp
 - ls
 - mkdir
@@ -23,6 +24,38 @@ public class ConsoleInput {
 - tree
 - nano
      */
+    public static String MakeFile(String source) throws IOException
+    {
+               
+        String output = "File Exists";
+        String newLine = System.getProperty("line.separator");
+        
+        String temp = Ls();
+        String[] fileList = temp.split(newLine, -1);
+        
+        boolean create = true;
+        for (String i : fileList) {
+            if(i==source)
+            {
+                create = false;
+                break;
+            }
+        }
+        if(create==true)
+        {
+            try {
+                var processBuilder = new ProcessBuilder();
+
+                processBuilder.command("touch", source);
+
+                var process = processBuilder.start();
+                output="File "+source+" created";
+            } catch (Exception e) {
+                output="File "+source+" could not be created";
+            }
+        }
+        return output;
+    }
 
     public static String Ls() throws IOException {
 
@@ -32,22 +65,19 @@ public class ConsoleInput {
 
         var process = processBuilder.start();
         
-        String output = ""; 
-           
+        String output = "No files";
+        String newLine = System.getProperty("line.separator");
+
         try (var reader = new BufferedReader(
                 new InputStreamReader(process.getInputStream()))) {
 
             String line;
-
-            
+            output = "";
             while ((line = reader.readLine()) != null) {
-                output += line + " ";
+                output=line+newLine+output;
             }
         }
-        finally
-        {
-            output = "No files";
-        }
+        
         return output;
         
     }
@@ -60,22 +90,19 @@ public class ConsoleInput {
         
         var process = processBuilder.start();
         
-        String output = ""; 
-           
+        String output = "No files";
+        String newLine = System.getProperty("line.separator");
+
         try (var reader = new BufferedReader(
                 new InputStreamReader(process.getInputStream()))) {
 
             String line;
-
-            
+            output = "";
             while ((line = reader.readLine()) != null) {
-                output += line + " ";
+                output=line+newLine+output;
             }
         }
-        finally
-        {
-            output = "No files";
-        }
+        
         return output;
     }
 
@@ -99,7 +126,7 @@ public class ConsoleInput {
                 output += line + " ";
             }
         }
-        finally
+        catch(Exception e)
         {
             output = "No files";
         }
@@ -125,7 +152,7 @@ public class ConsoleInput {
                 output += line + " ";
             }
         }
-        finally
+        catch(Exception e)
         {
             output = "No files";
         }
@@ -152,7 +179,7 @@ public class ConsoleInput {
                 output += line + " ";
             }
         }
-        finally
+        catch(Exception e)
         {
             output = "No files";
         }
@@ -179,18 +206,18 @@ public class ConsoleInput {
                 output += line + " ";
             }
         }
-        finally
+        catch(Exception e)
         {
             output = "No files";
         }
         return output;
     }
 
-    public static String whoami() throws IOException {
+    public static String whoami(String source) throws IOException {
 
         var processBuilder = new ProcessBuilder();
 
-        processBuilder.command("whoami");
+        processBuilder.command("whoami",source);
 
         var process = processBuilder.start();
 
@@ -206,7 +233,7 @@ public class ConsoleInput {
                 output += line + " ";
             }
         }
-        finally
+        catch(Exception e)
         {
             output = "No files";
         }
@@ -233,7 +260,7 @@ public class ConsoleInput {
                 output += line + " ";
             }
         }
-        finally
+        catch(Exception e)
         {
             output = "No files";
         }
