@@ -14,7 +14,8 @@ import java.io.InputStreamReader;
 public class ConsoleInput {
 
     /*
--mv
+- makeFile
+- mv
 - cp
 - ls
 - mkdir
@@ -23,7 +24,72 @@ public class ConsoleInput {
 - tree
 - nano
      */
+    public static String MakeFile(String source) throws IOException
+    {
+               
+        String output = "File "+source+" Exists";
+        String newLine = System.getProperty("line.separator");
+        
+        String temp = Ls();
+        String[] fileList = temp.split(newLine, -1);
+        
+        boolean create = true;
+        for (String i : fileList) {
+            if(new String(source).equals(i))
+            {
+                create = false;
+                break;
+            }
+        }
+        if(create==true)
+        {
+            try {
+                var processBuilder = new ProcessBuilder();
 
+                processBuilder.command("touch", source);
+
+                var process = processBuilder.start();
+                output="File "+source+" created";
+            } catch (Exception e) {
+                output="File "+source+" could not be created";
+            }
+        }
+        return output;
+    }
+
+    public static String DeleteFile(String source) throws IOException
+    {
+        String output = "File"+source+" Doesn't Exist";
+        String newLine = System.getProperty("line.separator");
+        newLine = newLine+"             ";
+        String temp = Ls();
+        String[] fileList = temp.split(newLine, -1);
+        
+        boolean delete = false;
+        for (String i : fileList) {
+            if(new String(source).equals(i))
+            {
+                delete = true;
+                break;
+            }
+        }
+        if(delete==true)
+        {
+            try {
+                var processBuilder = new ProcessBuilder();
+
+                processBuilder.command("rm", source);
+
+                var process = processBuilder.start();
+                output="File "+source+" deleted";
+            } catch (Exception e) {
+                output="File "+source+" could not be deleted";
+            }
+        }
+        
+        return output;
+    }
+    
     public static String Ls() throws IOException {
 
         var processBuilder = new ProcessBuilder();
@@ -32,22 +98,19 @@ public class ConsoleInput {
 
         var process = processBuilder.start();
         
-        String output = ""; 
-           
+        String output = "No files";
+        String newLine = System.getProperty("line.separator");
+
         try (var reader = new BufferedReader(
                 new InputStreamReader(process.getInputStream()))) {
 
             String line;
-
-            
+            output = "";
             while ((line = reader.readLine()) != null) {
-                output += line + " ";
+                output=line+newLine+"             "+output;
             }
         }
-        finally
-        {
-            output = "No files";
-        }
+        
         return output;
         
     }
@@ -60,22 +123,19 @@ public class ConsoleInput {
         
         var process = processBuilder.start();
         
-        String output = ""; 
-           
+        String output = "No files";
+        String newLine = System.getProperty("line.separator");
+
         try (var reader = new BufferedReader(
                 new InputStreamReader(process.getInputStream()))) {
 
             String line;
-
-            
+            output = "";
             while ((line = reader.readLine()) != null) {
-                output += line + " ";
+                output=line+newLine+output;
             }
         }
-        finally
-        {
-            output = "No files";
-        }
+        
         return output;
     }
 
@@ -99,7 +159,7 @@ public class ConsoleInput {
                 output += line + " ";
             }
         }
-        finally
+        catch(Exception e)
         {
             output = "No files";
         }
@@ -125,7 +185,7 @@ public class ConsoleInput {
                 output += line + " ";
             }
         }
-        finally
+        catch(Exception e)
         {
             output = "No files";
         }
@@ -152,7 +212,7 @@ public class ConsoleInput {
                 output += line + " ";
             }
         }
-        finally
+        catch(Exception e)
         {
             output = "No files";
         }
@@ -179,14 +239,14 @@ public class ConsoleInput {
                 output += line + " ";
             }
         }
-        finally
+        catch(Exception e)
         {
             output = "No files";
         }
         return output;
     }
 
-    public static String whoami() throws IOException {
+    public static String whoami(String source) throws IOException {
 
         var processBuilder = new ProcessBuilder();
 
@@ -206,9 +266,9 @@ public class ConsoleInput {
                 output += line + " ";
             }
         }
-        finally
+        catch(Exception e)
         {
-            output = "No files";
+            output = "Error";
         }
         return output;
     }
@@ -233,7 +293,7 @@ public class ConsoleInput {
                 output += line + " ";
             }
         }
-        finally
+        catch(Exception e)
         {
             output = "No files";
         }
