@@ -19,6 +19,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 
 public class PrimaryController {
 
@@ -40,7 +41,7 @@ public class PrimaryController {
     private TextField Destination;
     
     @FXML
-    private Label consoleOut;
+    private TextArea textOutput;
     
     //Console area playground/////////
     @FXML
@@ -114,13 +115,17 @@ public class PrimaryController {
         }
     }
     
+    
+    //console functions
+    
     @FXML
     private void treeConsole(ActionEvent event) throws IOException, InterruptedException
     {
         var console = new ConsoleInput();
         String output = console.Tree();
-        
-        consoleOut.setText("Output: "+output);
+        textOutput.setText("Output: "+output);
+        Source.setText("");
+        Destination.setText("");
     }
     
     @FXML
@@ -128,23 +133,9 @@ public class PrimaryController {
     {
         var console = new ConsoleInput();
         String output = console.Ls();
-        consoleOut.setText("Output: "+output);
-    }
-    
-    @FXML
-    private void createFileConsole(ActionEvent event) throws IOException, InterruptedException
-    {
-        var console = new ConsoleInput();
-        String output = console.MakeFile(Source.getText());        
-        consoleOut.setText("Output: "+output);
-    }
-    
-    @FXML
-    private void deleteFileConsole(ActionEvent event) throws IOException, InterruptedException
-    {
-        var console = new ConsoleInput();
-        String output = console.DeleteFile(Source.getText());
-        consoleOut.setText("Output: "+output);
+        textOutput.setText("Output: "+output);
+        Source.setText("");
+        Destination.setText("");
     }
     
     @FXML
@@ -152,6 +143,45 @@ public class PrimaryController {
     {
         var console = new ConsoleInput();
         String output = console.whoami(Source.getText());
-        consoleOut.setText("Output: "+output);
+        textOutput.setText("Output: "+output);
     }
+    
+    //file funcitons
+    
+    @FXML
+    private void createFileConsole(ActionEvent event) throws IOException, InterruptedException
+    {
+        var console = new ConsoleInput();
+        String output = console.MakeFile(Source.getText());  
+        textOutput.setText("Output: "+output);
+        Destination.setText("");
+    }
+    
+    @FXML
+    private void deleteFileConsole(ActionEvent event) throws IOException, InterruptedException
+    {
+        var console = new ConsoleInput();
+        String output = console.DeleteFile(Source.getText());
+        textOutput.setText("Output: "+output);
+        Destination.setText("");
+    }
+    
+    @FXML
+    private void retriveFileConsole(ActionEvent event) throws IOException, InterruptedException
+    {
+        var console = new ConsoleInput();
+        String output = console.RetriveFile(Source.getText());
+        textOutput.setText(output);
+        Destination.setText("");
+    }
+    
+    @FXML
+    private void updateFileConsole(ActionEvent event) throws IOException, InterruptedException
+    {
+        var console = new ConsoleInput();
+        String output = console.UpdateFile(Source.getText(),textOutput.getText());
+        textOutput.setText(output);
+        Destination.setText("");
+    }
+    
 }

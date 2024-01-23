@@ -41,7 +41,7 @@ public class ConsoleInput {
                 break;
             }
         }
-        if(create==true)
+        if(create==true && !new String(source).equals(""))
         {
             try {
                 var processBuilder = new ProcessBuilder();
@@ -53,6 +53,9 @@ public class ConsoleInput {
             } catch (Exception e) {
                 output="File "+source+" could not be created";
             }
+        }else if(new String(source).equals(""))
+        {
+            output="File "+source+" could not be created";
         }
         return output;
     }
@@ -73,7 +76,7 @@ public class ConsoleInput {
                 break;
             }
         }
-        if(delete==true)
+        if(delete==true && !new String(source).equals(""))
         {
             try {
                 var processBuilder = new ProcessBuilder();
@@ -85,6 +88,89 @@ public class ConsoleInput {
             } catch (Exception e) {
                 output="File "+source+" could not be deleted";
             }
+        } else if (new String(source).equals(""))
+        {
+            output="File "+source+" could not be deleted";
+        }
+        
+        return output;
+    }
+    
+    public static String RetriveFile(String source) throws IOException
+    {
+        String output = "File"+source+" Doesn't Exist";
+        String newLine = System.getProperty("line.separator");
+        newLine = newLine+"             ";
+        String temp = Ls();
+        String[] fileList = temp.split(newLine, -1);
+        
+        boolean exists = false;
+        for (String i : fileList) {
+            if(new String(source).equals(i))
+            {
+                exists = true;
+                break;
+            }
+        }
+        if(exists==true && !new String(source).equals(""))
+        {
+            try {
+                var processBuilder = new ProcessBuilder();
+
+                processBuilder.command("cat", source);
+
+                var process = processBuilder.start();
+                try (var reader = new BufferedReader(
+                        new InputStreamReader(process.getInputStream()))) {
+
+                    String line;
+                    output = "";
+                    while ((line = reader.readLine()) != null) {
+                        output = line + newLine+ output;
+                    }
+                }
+            } catch (Exception e) {
+                output = "File " + source + " could not be found";
+            }
+        } else if (new String(source).equals(""))
+        {
+            output="File "+source+" could not be found";
+        }
+        
+        return output;
+    }
+    
+    public static String UpdateFile(String source, String data) throws IOException
+    {
+        String output = "File"+source+" Doesn't Exist";
+        String newLine = System.getProperty("line.separator");
+        newLine = newLine+"             ";
+        String temp = Ls();
+        String[] fileList = temp.split(newLine, -1);
+        
+        boolean exists = false;
+        for (String i : fileList) {
+            if(new String(source).equals(i))
+            {
+                exists = true;
+                break;
+            }
+        }
+        if(exists==true && !new String(source).equals(""))
+        {
+            try {
+                var processBuilder = new ProcessBuilder();
+
+                processBuilder.command("echo test >"+source);
+
+                var process = processBuilder.start();
+                output=source+" Updated";
+            } catch (Exception e) {
+                output="File "+source+" could not be found";
+            }
+        } else if (new String(source).equals(""))
+        {
+            output="File "+source+" could not be found";
         }
         
         return output;
