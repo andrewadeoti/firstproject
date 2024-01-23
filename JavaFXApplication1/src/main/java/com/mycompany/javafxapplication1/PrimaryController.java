@@ -1,6 +1,8 @@
 package com.mycompany.javafxapplication1;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Optional;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -21,11 +23,18 @@ import javafx.scene.control.Label;
 public class PrimaryController {
 
     //Console area playground/////////
-    @FXML 
-    private Button consoleBtn;
     
+//    @FXML
+//    private Button consoleLsBtn;
+//    
+//    @FXML
+//    private Button consoleTreeBtn;
+//    
+//    @FXML
+//    private TextField consoleIn;
+//    
     @FXML
-    private TextField consoleIn;
+    private TextField Source;
     
     @FXML
     private TextField Destination;
@@ -106,33 +115,31 @@ public class PrimaryController {
     }
     
     @FXML
-    private void openConsole(ActionEvent event) throws IOException, InterruptedException
+    private void treeConsole(ActionEvent event) throws IOException, InterruptedException
     {
-//        var processBuilder = new ProcessBuilder();
-//
-//        processBuilder.command("terminator");
-//
-//        var process = processBuilder.start();
-//
-//        var ret = process.waitFor();
-//
-//        System.out.printf("Program exited with code: %d", ret);
-        
         var console = new ConsoleInput();
+        String output = console.Tree();
         
-        String input =consoleIn.getText();
-        String output;
+        consoleOut.setText("Output: "+output);
+    }
+    
+    @FXML
+    private void lsConsole(ActionEvent event) throws IOException, InterruptedException
+    {
+
+        var console = new ConsoleInput();
+        String output = console.Ls();
         
-        if ("ls"==input)
-        {
-            output=console.Ls();
-            consoleOut.setText(output);
-        }
-        else
-        {
-            output=console.Ls();
-        }
-        consoleIn.clear();
+        consoleOut.setText("Output: "+output);
         
+    }
+    
+    @FXML
+    private void createFileConsole(ActionEvent event) throws IOException, InterruptedException
+    {
+        var console = new ConsoleInput();
+        String output = console.MakeFile(Source.getText());
+        
+        consoleOut.setText("Output: "+output);
     }
 }
