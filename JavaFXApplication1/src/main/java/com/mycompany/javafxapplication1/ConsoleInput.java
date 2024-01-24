@@ -6,6 +6,10 @@ package com.mycompany.javafxapplication1;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.*;
+
+
+
 
 /**
  *
@@ -98,7 +102,7 @@ public class ConsoleInput {
     
     public static String RetriveFile(String source) throws IOException
     {
-        String output = "File"+source+" Doesn't Exist";
+        String output = "File "+source+" Doesn't Exist";
         String newLine = System.getProperty("line.separator");
         newLine = newLine+"             ";
         String temp = Ls();
@@ -112,6 +116,7 @@ public class ConsoleInput {
                 break;
             }
         }
+        newLine = System.getProperty("line.separator");
         if(exists==true && !new String(source).equals(""))
         {
             try {
@@ -126,7 +131,8 @@ public class ConsoleInput {
                     String line;
                     output = "";
                     while ((line = reader.readLine()) != null) {
-                        output = line + newLine+ output;
+                        System.out.println(line);
+                        output = output+line+newLine;
                     }
                 }
             } catch (Exception e) {
@@ -142,37 +148,34 @@ public class ConsoleInput {
     
     public static String UpdateFile(String source, String data) throws IOException
     {
-        String output = "File"+source+" Doesn't Exist";
+        String output = "File" + source + " Doesn't Exist";
         String newLine = System.getProperty("line.separator");
-        newLine = newLine+"             ";
+        newLine = newLine + "             ";
         String temp = Ls();
         String[] fileList = temp.split(newLine, -1);
-        
+
         boolean exists = false;
         for (String i : fileList) {
-            if(new String(source).equals(i))
-            {
+            if (new String(source).equals(i)) {
                 exists = true;
                 break;
             }
         }
-        if(exists==true && !new String(source).equals(""))
-        {
+        if (exists == true && !new String(source).equals("")) {
             try {
-                var processBuilder = new ProcessBuilder();
-
-                processBuilder.command("echo test >"+source);
-
-                var process = processBuilder.start();
-                output=source+" Updated";
-            } catch (Exception e) {
-                output="File "+source+" could not be found";
+                FileWriter writer = new FileWriter(source);
+                writer.write(data);
+                writer.close();
+                output = "Successfully wrote to file: " + source;
+            } catch (IOException e) {
+                output = "Error writing to file: " + source;
             }
-        } else if (new String(source).equals(""))
-        {
-            output="File "+source+" could not be found";
+        } else if (new String(source).equals("")) {
+            output = "File " + source + " could not be found";
         }
-        
+
+
+
         return output;
     }
     
