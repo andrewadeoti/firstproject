@@ -36,30 +36,27 @@ public class ConsoleInput {
         
         String temp = Ls();
         String[] fileList = temp.split(newLine, -1);
-        
+ 
         boolean create = true;
         for (String i : fileList) {
-            if(new String(source).equals(i))
-            {
+            if (new String(source).equals(i)) {
                 create = false;
                 break;
             }
         }
-        if(create==true && !new String(source).equals(""))
-        {
+        if (create == true && !new String(source).equals("")) {
             try {
-                var processBuilder = new ProcessBuilder();
-
-                processBuilder.command("touch", source);
-
-                var process = processBuilder.start();
-                output="File "+source+" created";
-            } catch (Exception e) {
-                output="File "+source+" could not be created";
+                File myObj = new File(source);
+                if (myObj.createNewFile()) {
+                    output=("File created: " + myObj.getName());
+                } else {
+                    output=("File already exists.");
+                }
+            } catch (IOException e) {
+                output=("An error occurred.");
             }
-        }else if(new String(source).equals(""))
-        {
-            output="File "+source+" could not be created";
+        } else if (new String(source).equals("")) {
+            output = "File " + source + " could not be created";
         }
         return output;
     }
@@ -80,23 +77,21 @@ public class ConsoleInput {
                 break;
             }
         }
-        if(delete==true && !new String(source).equals(""))
-        {
+        if (delete == true && !new String(source).equals("")) {
             try {
-                var processBuilder = new ProcessBuilder();
-
-                processBuilder.command("rm", source);
-
-                var process = processBuilder.start();
-                output="File "+source+" deleted";
+                File myObj = new File(source);
+                if (myObj.delete()) {
+                    output =("Deleted the file: " + myObj.getName());
+                } else {
+                    output =("Failed to delete the file.");
+                }
             } catch (Exception e) {
-                output="File "+source+" could not be deleted";
+                output = "File " + source + " could not be deleted";
             }
-        } else if (new String(source).equals(""))
-        {
-            output="File "+source+" could not be deleted";
+        } else if (new String(source).equals("")) {
+            output = "File " + source + " could not be deleted";
         }
-        
+
         return output;
     }
     
@@ -131,7 +126,6 @@ public class ConsoleInput {
                     String line;
                     output = "";
                     while ((line = reader.readLine()) != null) {
-                        System.out.println(line);
                         output = output+line+newLine;
                     }
                 }
