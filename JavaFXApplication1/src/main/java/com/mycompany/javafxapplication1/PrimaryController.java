@@ -146,6 +146,14 @@ public class PrimaryController {
         textOutput.setText("Output: "+output);
     }
     
+    @FXML
+    private void moveFileConsole(ActionEvent event) throws IOException, InterruptedException
+    {
+        var console = new ConsoleInput();
+        String output = console.Mv(Source.getText(),Destination.getText());
+        textOutput.setText("Output: "+output);
+    }
+    
     //file funcitons
     
     @FXML
