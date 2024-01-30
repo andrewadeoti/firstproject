@@ -119,48 +119,55 @@ public class PrimaryController {
     //console functions
     
     @FXML
-    private void treeConsole(ActionEvent event) throws IOException, InterruptedException
+    private void lsConsole(ActionEvent event) throws IOException, InterruptedException
     {
         var console = new ConsoleInput();
-        String output = console.Tree();
+        String output = console.ls("");
         textOutput.setText("Output: "+output);
         Source.setText("");
         Destination.setText("");
     }
     
     @FXML
-    private void lsConsole(ActionEvent event) throws IOException, InterruptedException
+    private void treeConsole(ActionEvent event) throws IOException, InterruptedException
     {
         var console = new ConsoleInput();
-        String output = console.Ls();
+        String output = console.tree();
         textOutput.setText("Output: "+output);
         Source.setText("");
         Destination.setText("");
     }
     
+    
+    //system function
     @FXML
     private void whoAmIConsole(ActionEvent event) throws IOException, InterruptedException
     {
         var console = new ConsoleInput();
-        String output = console.whoami(Source.getText());
+        String output = console.whoami();
         textOutput.setText("Output: "+output);
     }
     
     @FXML
-    private void moveFileConsole(ActionEvent event) throws IOException, InterruptedException
+    private void psConsole(ActionEvent event) throws IOException, InterruptedException
     {
         var console = new ConsoleInput();
-        String output = console.Mv(Source.getText(),Destination.getText());
+        String output = console.ps();
         textOutput.setText("Output: "+output);
     }
     
+    
+    
     //file funcitons
+
+    
+    
     
     @FXML
     private void createFileConsole(ActionEvent event) throws IOException, InterruptedException
     {
         var console = new ConsoleInput();
-        String output = console.MakeFile(Source.getText());  
+        String output = console.makeFile(Source.getText());  
         textOutput.setText("Output: "+output);
         Destination.setText("");
     }
@@ -169,7 +176,7 @@ public class PrimaryController {
     private void deleteFileConsole(ActionEvent event) throws IOException, InterruptedException
     {
         var console = new ConsoleInput();
-        String output = console.DeleteFile(Source.getText());
+        String output = console.deleteFile(Source.getText());
         textOutput.setText("Output: "+output);
         Destination.setText("");
     }
@@ -178,7 +185,7 @@ public class PrimaryController {
     private void retriveFileConsole(ActionEvent event) throws IOException, InterruptedException
     {
         var console = new ConsoleInput();
-        String output = console.RetriveFile(Source.getText());
+        String output = console.retriveFile(Source.getText());
         textOutput.setText(output);
         Destination.setText("");
     }
@@ -187,9 +194,34 @@ public class PrimaryController {
     private void updateFileConsole(ActionEvent event) throws IOException, InterruptedException
     {
         var console = new ConsoleInput();
-        String output = console.UpdateFile(Source.getText(),textOutput.getText());
+        String output = console.updateFile(Source.getText(),textOutput.getText());
         textOutput.setText(output);
         Destination.setText("");
     }
     
+    
+    @FXML
+    private void moveFileConsole(ActionEvent event) throws IOException, InterruptedException
+    {
+        var console = new ConsoleInput();
+        String output = console.mv(Source.getText(),Destination.getText());
+        textOutput.setText("Output: "+output);
+    }
+    
+    @FXML
+    private void copyFileConsole(ActionEvent event) throws IOException, InterruptedException
+    {
+        var console = new ConsoleInput();
+        String output = console.cp(Source.getText(),Destination.getText());
+        textOutput.setText("Output: "+output);
+    }
+    
+    @FXML
+    private void makeFolderConsole(ActionEvent event) throws IOException, InterruptedException
+    {
+        var console = new ConsoleInput();
+        String output = console.mkdir(Source.getText());  
+        textOutput.setText("Output: "+output);
+        Destination.setText("");
+    }
 }
