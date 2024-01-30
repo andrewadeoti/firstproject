@@ -28,23 +28,25 @@ public class ConsoleInput {
 - tree
 - nano
      */
-    public static String MakeFile(String source) throws IOException
+    
+    //file and folder editing
+    public static String makeFile(String source) throws IOException
     {
                
         String output = "File "+source+" Exists";
         String newLine = System.getProperty("line.separator");
         
-        String temp = Ls();
+        String temp = ls("");
         String[] fileList = temp.split(newLine, -1);
  
         boolean create = true;
         for (String i : fileList) {
-            if (new String(source).equals(i)) {
+            if (source.equals(i)) {
                 create = false;
                 break;
             }
         }
-        if (create == true && !new String(source).equals("")) {
+        if (create == true && !source.equals("")) {
             try {
                 File myObj = new File(source);
                 if (myObj.createNewFile()) {
@@ -55,29 +57,29 @@ public class ConsoleInput {
             } catch (IOException e) {
                 output=("An error occurred.");
             }
-        } else if (new String(source).equals("")) {
+        } else if (source.equals("")) {
             output = "File " + source + " could not be created";
         }
         return output;
     }
 
-    public static String DeleteFile(String source) throws IOException
+    public static String deleteFile(String source) throws IOException
     {
-        String output = "File"+source+" Doesn't Exist";
+        String output = "File "+source+" Doesn't Exist";
         String newLine = System.getProperty("line.separator");
         newLine = newLine+"             ";
-        String temp = Ls();
+        String temp = ls("");
         String[] fileList = temp.split(newLine, -1);
         
         boolean delete = false;
         for (String i : fileList) {
-            if(new String(source).equals(i))
+            if(source.equals(i))
             {
                 delete = true;
                 break;
             }
         }
-        if (delete == true && !new String(source).equals("")) {
+        if (delete == true && !source.equals("")) {
             try {
                 File myObj = new File(source);
                 if (myObj.delete()) {
@@ -88,31 +90,31 @@ public class ConsoleInput {
             } catch (Exception e) {
                 output = "File " + source + " could not be deleted";
             }
-        } else if (new String(source).equals("")) {
+        } else if (source.equals("")) {
             output = "File " + source + " could not be deleted";
         }
 
         return output;
     }
     
-    public static String RetriveFile(String source) throws IOException
+    public static String retriveFile(String source) throws IOException
     {
         String output = "File "+source+" Doesn't Exist";
         String newLine = System.getProperty("line.separator");
         newLine = newLine+"             ";
-        String temp = Ls();
+        String temp = ls("");
         String[] fileList = temp.split(newLine, -1);
         
         boolean exists = false;
         for (String i : fileList) {
-            if(new String(source).equals(i))
+            if(source.equals(i))
             {
                 exists = true;
                 break;
             }
         }
         newLine = System.getProperty("line.separator");
-        if(exists==true && !new String(source).equals(""))
+        if(exists==true && !source.equals(""))
         {
             try {
                 var processBuilder = new ProcessBuilder();
@@ -129,10 +131,10 @@ public class ConsoleInput {
                         output = output+line+newLine;
                     }
                 }
-            } catch (Exception e) {
+            } catch (IOException e) {
                 output = "File " + source + " could not be found";
             }
-        } else if (new String(source).equals(""))
+        } else if (source.equals(""))
         {
             output="File "+source+" could not be found";
         }
@@ -140,31 +142,31 @@ public class ConsoleInput {
         return output;
     }
     
-    public static String UpdateFile(String source, String data) throws IOException
+    public static String updateFile(String source, String data) throws IOException
     {
-        String output = "File" + source + " Doesn't Exist";
+        String output = "File " + source + " Doesn't Exist";
         String newLine = System.getProperty("line.separator");
         newLine = newLine + "             ";
-        String temp = Ls();
+        String temp = ls("");
         String[] fileList = temp.split(newLine, -1);
 
         boolean exists = false;
         for (String i : fileList) {
-            if (new String(source).equals(i)) {
+            if (source.equals(i)) {
                 exists = true;
                 break;
             }
         }
-        if (exists == true && !new String(source).equals("")) {
+        if (exists == true && !source.equals("")) {
             try {
-                FileWriter writer = new FileWriter(source);
-                writer.write(data);
-                writer.close();
+                try (java.io.FileWriter writer = new FileWriter(source)) {
+                    writer.write(data);
+                }
                 output = "Successfully wrote to file: " + source;
             } catch (IOException e) {
                 output = "Error writing to file: " + source;
             }
-        } else if (new String(source).equals("")) {
+        } else if (source.equals("")) {
             output = "File " + source + " could not be found";
         }
 
@@ -173,11 +175,72 @@ public class ConsoleInput {
         return output;
     }
     
-    public static String Ls() throws IOException {
+    public static String mkdir(String directory) throws IOException 
+    {
+        String output; 
+           
+        try{
+            
+            var processBuilder = new ProcessBuilder();
+
+            processBuilder.command("mkdir", directory);
+
+            var process = processBuilder.start();
+            output = "Folder made at " + getPath(directory);
+        } catch (IOException e) {
+            output = "Error Creating Folder";
+        }
+        return output;
+    }
+    
+    public static String cp(String source, String destination) throws IOException 
+    {
+        String output = ""; 
+           
+        try {
+            var processBuilder = new ProcessBuilder();
+
+            processBuilder.command("cp", source, destination);
+
+            var process = processBuilder.start();
+            output = "File coppied at " + getPath(destination);
+        } catch (IOException e) {
+            output = "No files";
+        }
+        return output;
+    }
+    
+    public static String mv(String source, String destination) throws IOException 
+    {
 
         var processBuilder = new ProcessBuilder();
 
-        processBuilder.command("ls");
+        processBuilder.command("mv", source, destination);
+        
+        var process = processBuilder.start();
+
+        String output; 
+           
+        try (var reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+            output = "Moved "+getPath(source)+" to "+getPath(destination);
+        }
+        
+        catch(Exception e)
+        {
+            output = "Couldn't move "+source+" to "+destination+" due to an error: "+e;
+        }
+        
+        return output;
+    }
+    
+    //file and folder inspecting
+    
+    public static String ls(String source) throws IOException 
+    {
+
+        var processBuilder = new ProcessBuilder();
+
+        processBuilder.command("ls"+source);
 
         var process = processBuilder.start();
         
@@ -198,7 +261,8 @@ public class ConsoleInput {
         
     }
 
-    public static String Tree() throws IOException {
+    public static String tree() throws IOException 
+    {
 
         var processBuilder = new ProcessBuilder();
 
@@ -221,92 +285,37 @@ public class ConsoleInput {
         
         return output;
     }
-
-    public static String Mv(String source, String destination) throws IOException {
-
+    
+    
+    public static String getPath(String source) throws IOException 
+    {
         var processBuilder = new ProcessBuilder();
 
-        processBuilder.command("mv", source, destination);
+        processBuilder.command("readlink -f",source);
         
         var process = processBuilder.start();
+        
+        String output = "No files";
 
-        String output = ""; 
-           
         try (var reader = new BufferedReader(
                 new InputStreamReader(process.getInputStream()))) {
 
             String line;
-
-            
+            output = "";
             while ((line = reader.readLine()) != null) {
-                output += line + " ";
+                output+=line+" ";
             }
         }
-        catch(Exception e)
-        {
-            output = "No files";
-        }
-        return output;
-    }
-
-    public static String cp(String source, String destination) throws IOException {
-
-        var processBuilder = new ProcessBuilder();
-
-        processBuilder.command("cp", source, destination);
         
-        var process = processBuilder.start();
-
-        String output = ""; 
-           
-        try (var reader = new BufferedReader(
-            new InputStreamReader(process.getInputStream()))) {
-
-            String line;
-
-            while ((line = reader.readLine()) != null) {
-                output += line + " ";
-            }
-        }
-        catch(Exception e)
-        {
-            output = "No files";
-        }
         return output;
     }
-
-    public static String mkdir(String directory) throws IOException {
+    
+    public static String nano() throws IOException 
+    {
 
         var processBuilder = new ProcessBuilder();
 
-        processBuilder.command("mkdir",directory);
-        
-        var process = processBuilder.start();
-
-        String output = ""; 
-           
-        try (var reader = new BufferedReader(
-                new InputStreamReader(process.getInputStream()))) {
-
-            String line;
-
-            
-            while ((line = reader.readLine()) != null) {
-                output += line + " ";
-            }
-        }
-        catch(Exception e)
-        {
-            output = "No files";
-        }
-        return output;
-    }
-
-    public static String ps(String source, String destination) throws IOException {
-
-        var processBuilder = new ProcessBuilder();
-
-        processBuilder.command("ps", source, destination);
+        processBuilder.command("nano");
 
         var process = processBuilder.start();
 
@@ -328,8 +337,40 @@ public class ConsoleInput {
         }
         return output;
     }
+    
+    //system inquireies
 
-    public static String whoami(String source) throws IOException {
+    public static String ps() throws IOException 
+    {
+
+        var processBuilder = new ProcessBuilder();
+
+        processBuilder.command("ps");
+
+        var process = processBuilder.start();
+
+        String output = ""; 
+        
+        String newLine = System.getProperty("line.separator");
+        try (var reader = new BufferedReader(
+                new InputStreamReader(process.getInputStream()))) {
+
+            String line;
+
+            
+            while ((line = reader.readLine()) != null) {
+                output += line + " "+newLine;
+            }
+        }
+        catch(Exception e)
+        {
+            output = "No files";
+        }
+        return output;
+    }
+
+    public static String whoami() throws IOException 
+    {
 
         var processBuilder = new ProcessBuilder();
 
@@ -356,31 +397,6 @@ public class ConsoleInput {
         return output;
     }
 
-    public static String nano() throws IOException {
-
-        var processBuilder = new ProcessBuilder();
-
-        processBuilder.command("nano");
-
-        var process = processBuilder.start();
-
-        String output = ""; 
-           
-        try (var reader = new BufferedReader(
-                new InputStreamReader(process.getInputStream()))) {
-
-            String line;
-
-            
-            while ((line = reader.readLine()) != null) {
-                output += line + " ";
-            }
-        }
-        catch(Exception e)
-        {
-            output = "No files";
-        }
-        return output;
-    }
+    
 
 }
