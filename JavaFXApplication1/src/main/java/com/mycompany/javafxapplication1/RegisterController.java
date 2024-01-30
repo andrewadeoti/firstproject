@@ -90,6 +90,7 @@ public class RegisterController {
             DB myObj = new DB();
             if (passPasswordField.getText().equals(rePassPasswordField.getText())) {
                 myObj.addDataToDB(userTextField.getText(), passPasswordField.getText());
+                System.out.println(myObj);
                 dialogue("Adding information to the database", "Successful!");
                 String[] credentials = {userTextField.getText(), passPasswordField.getText()};
                 loader.setLocation(getClass().getResource("secondary.fxml"));
