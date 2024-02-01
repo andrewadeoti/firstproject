@@ -4,6 +4,8 @@
  */
 package com.mycompany.javafxapplication1;
 
+import java.util.HashSet;
+import java.util.Set;
 import javafx.beans.property.SimpleStringProperty;
 
 /**
@@ -34,6 +36,15 @@ public class User {
     public void setPass(String pass) {
         this.pass.set(pass);
     }
+    
+//    public int getId() {
+//        return id;
+//    }
+//    
+//    public void setId(int id) {
+//        this.id = id;
+//        
+//    }
 }
 
 

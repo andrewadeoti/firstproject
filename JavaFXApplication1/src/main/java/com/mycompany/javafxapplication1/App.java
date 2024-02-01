@@ -14,6 +14,9 @@ import java.util.logging.Logger;
  * JavaFX App
  */
 public class App extends Application {
+    
+    public int userId = 0;
+    
 
     @Override
     public void start(Stage stage) throws IOException {

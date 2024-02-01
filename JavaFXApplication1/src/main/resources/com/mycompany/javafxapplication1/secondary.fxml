@@ -31,37 +31,21 @@
       </GridPane>
         <Label text="Users List" />
       <TableView fx:id="dataTableView" prefHeight="300.0" prefWidth="300.0" />
-      <GridPane>
+      <GridPane alignment="CENTER">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-              <Button fx:id="secondaryButton" onAction="#switchToPrimary" text="Return to Login" GridPane.columnIndex="1" />
-            <Button fx:id="refreshBtn" mnemonicParsing="false" onAction="#RefreshBtnHandler" text="Refresh" />
-         </children>
-      </GridPane>
-      <GridPane>
-         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="35.0" minWidth="35.0" prefWidth="35.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="85.0" minWidth="85.0" prefWidth="85.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="85.0" minWidth="85.0" prefWidth="85.0" />
-            <ColumnConstraints hgrow="SOMETIMES" />
-         </columnConstraints>
-         <rowConstraints>
-            <RowConstraints />
-            <RowConstraints maxHeight="35.0" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
-         </rowConstraints>
-         <children>
-            <Button fx:id="consoleLsBtn" mnemonicParsing="false" onAction="#lsConsole" text="Ls" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Button fx:id="consoleTreeBtn" mnemonicParsing="false" onAction="#treeConsole" text="Tree" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-            <Button fx:id="consoleWAIBtn" mnemonicParsing="false" onAction="#whoAmIConsole" text="Who Am I" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-            <Button fx:id="consolePsBtn" mnemonicParsing="false" onAction="#psConsole" text="Processes" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+              <Button fx:id="secondaryButton" onAction="#switchToPrimary" text="Return to Login" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <Button fx:id="refreshBtn" mnemonicParsing="false" onAction="#RefreshBtnHandler" text="Refresh" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <Button fx:id="selectBtn" mnemonicParsing="false" onAction="#selectBtnHandler" text="Select File Name" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <Button fx:id="openConsoleBtn" mnemonicParsing="false" onAction="#openConsoleBtnHandler" text="Open Console" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
          </children>
       </GridPane>
       <GridPane>
@@ -81,23 +65,6 @@
             <Button fx:id="consoleDFBtn" mnemonicParsing="false" onAction="#deleteFileConsole" text="Delete File" GridPane.columnIndex="2" />
             <Button fx:id="consoleInspectBtn" mnemonicParsing="false" onAction="#retriveFileConsole" text="File Inspect" GridPane.columnIndex="3" />
             <Button fx:id="consoleUpdateBtn" mnemonicParsing="false" onAction="#updateFileConsole" text="File Update" GridPane.columnIndex="4" />
-         </children>
-      </GridPane>
-      <GridPane>
-         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="80.0" minWidth="80.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" />
-         </columnConstraints>
-         <rowConstraints>
-            <RowConstraints maxHeight="35.0" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
-         </rowConstraints>
-         <children>
-            <Button fx:id="consoleMakeFolderBtn" mnemonicParsing="false" onAction="#makeFolderConsole" text="Make Folder" GridPane.columnIndex="1" />
-            <Button fx:id="consoleMoveFileBtn" mnemonicParsing="false" onAction="#moveFileConsole" text="Move FIle" GridPane.columnIndex="2" />
-            <Button fx:id="consoleCopyFileBtn" mnemonicParsing="false" onAction="#copyFileConsole" text="Copy FIle" GridPane.columnIndex="3" />
          </children>
       </GridPane>
       <GridPane>
