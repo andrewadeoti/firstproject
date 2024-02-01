@@ -186,7 +186,7 @@ public class ConsoleInput {
             processBuilder.command("mkdir", directory);
 
             var process = processBuilder.start();
-            output = "Folder made at " + getPath(directory);
+            output = "Folder made: " + (directory);
         } catch (IOException e) {
             output = "Error Creating Folder";
         }
@@ -203,7 +203,7 @@ public class ConsoleInput {
             processBuilder.command("cp", source, destination);
 
             var process = processBuilder.start();
-            output = "File coppied at " + getPath(destination);
+            output = "File coppied to: " + (destination);
         } catch (IOException e) {
             output = "No files";
         }
@@ -222,7 +222,7 @@ public class ConsoleInput {
         String output; 
            
         try (var reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
-            output = "Moved "+getPath(source)+" to "+getPath(destination);
+            output = "Moved "+(source)+" to "+(destination);
         }
         
         catch(Exception e)
