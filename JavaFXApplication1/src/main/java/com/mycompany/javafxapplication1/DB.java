@@ -4,6 +4,8 @@
  */
 package com.mycompany.javafxapplication1;
 
+
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -34,6 +36,8 @@ import javax.crypto.spec.PBEKeySpec;
  *
  * @author ntu-user
  */
+
+
 public class DB {
     private String fileName = "jdbc:sqlite:comp20081.db";
     private int timeout = 30;
