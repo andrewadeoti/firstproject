@@ -1,35 +1,33 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
+ */
 package com.mycompany.javafxapplication1;
 
-import java.io.File;
 import java.io.IOException;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.List;
-import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import java.net.URL;
+import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.text.Text;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+/**
+ * FXML Controller class
+ *
+ * @author ntu-user
+ */
+public class ConsoleController{
 
-
-public class SecondaryController {
-    
+    /**
+     * Initializes the controller class.
+     */
     ///////Console area playground/////////
     
    
@@ -46,95 +44,7 @@ public class SecondaryController {
     
     
     @FXML
-    private TextField userTextField;
-    
-    @FXML
-    private TableView dataTableView;
-
-    @FXML
-    private Button secondaryButton;
-    
-    @FXML
-    private Button refreshBtn;
-    
-    @FXML
-    private TextField customTextField;
-    
-    @FXML
-    private Text fileText;
-    
-    @FXML
-    private Button selectBtn;
-    
-    @FXML
-    private Button openConsoleBtn;
-    
-    
-    private String[] userCredentials;
-    
-    @FXML
-    private void selectBtnHandler(ActionEvent event) throws IOException {
-        Stage primaryStage = (Stage) selectBtn.getScene().getWindow();
-        primaryStage.setTitle("Select a File");
-
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Open Resource File");
-        fileChooser.setInitialDirectory(new File ("/home/ntu-user/NetBeansProjects/JavaFxCloud-Storage/JavaFXApplication1"));
-        
-        File selectedFile = fileChooser.showOpenDialog(primaryStage);
-        
-        if(selectedFile!=null){
-            fileText.setText((String)selectedFile.getCanonicalPath());
-        }
-        
-    }
-    
-    
-    @FXML
-    private void RefreshBtnHandler(ActionEvent event){
-        Stage primaryStage = (Stage) customTextField.getScene().getWindow();
-        customTextField.setText((String)primaryStage.getUserData());
-    }
-        
-    @FXML
-    private void switchToPrimary(){
-        Stage secondaryStage = new Stage();
-        Stage primaryStage = (Stage) secondaryButton.getScene().getWindow();
-        try {
-            
-        
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("primary.fxml"));
-            Parent root = loader.load();
-            Scene scene = new Scene(root, 640, 480);
-            secondaryStage.setScene(scene);
-            secondaryStage.setTitle("Login");
-            secondaryStage.show();
-            primaryStage.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    
-    @FXML
-    private void openConsoleBtnHandler(ActionEvent event) {
-        Stage secondaryStage = new Stage();
-        Stage primaryStage = (Stage) openConsoleBtn.getScene().getWindow();
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("console.fxml"));
-            Parent root = loader.load();
-            Scene scene = new Scene(root, 640, 480);
-            secondaryStage.setScene(scene);
-            secondaryStage.setTitle("Console");
-            secondaryStage.show();
-            primaryStage.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+    private Button returnToMainBtn;
     
     //console functions
     
@@ -246,25 +156,25 @@ public class SecondaryController {
     }
     
     
-
-    public void initialise(String[] credentials) {
-        userCredentials = credentials;
-        userTextField.setText(credentials[0]);
-        DB myObj = new DB();
-        ObservableList<User> data;
+    //Return to main scene button
+    
+    @FXML
+    private void openMainBtnHandler(ActionEvent event) {
+        Stage secondaryStage = new Stage();
+        Stage primaryStage = (Stage) returnToMainBtn.getScene().getWindow();
         try {
-            data = myObj.getDataFromTable();
-            TableColumn user = new TableColumn("User");
-        user.setCellValueFactory(
-        new PropertyValueFactory<>("user"));
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("secondary.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root, 640, 480);
+            secondaryStage.setScene(scene);
+            secondaryStage.setTitle("Console");
+            secondaryStage.show();
+            primaryStage.close();
 
-        TableColumn pass = new TableColumn("Pass");
-        pass.setCellValueFactory(
-            new PropertyValueFactory<>("pass"));
-        dataTableView.setItems(data);
-        dataTableView.getColumns().addAll(user, pass);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(SecondaryController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
+    
 }
