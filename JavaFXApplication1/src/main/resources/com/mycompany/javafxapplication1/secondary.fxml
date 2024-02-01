@@ -15,6 +15,7 @@
     <children>
       <GridPane>
         <columnConstraints>
+            <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="100.0" prefWidth="100.0" />
           <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
@@ -23,10 +24,11 @@
           <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="Welcome" />
-            <TextField fx:id="userTextField" GridPane.columnIndex="1" />
-            <Label text="Custom data" GridPane.rowIndex="1" />
-            <TextField fx:id="customTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label text="Welcome" GridPane.columnIndex="1" />
+            <TextField fx:id="userTextField" GridPane.columnIndex="2" />
+            <Label fx:id="" text="Custom data" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="customTextField" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <Button fx:id="deleteUser" mnemonicParsing="false" onAction="#deleteCurrentUser" text="Delete User" />
          </children>
       </GridPane>
         <Label text="Users List" />

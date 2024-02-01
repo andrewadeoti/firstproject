@@ -134,7 +134,7 @@ public class DB {
         try {
             Class.forName("org.sqlite.JDBC");
             connection = DriverManager.getConnection(fileName);
-            var statement = connection.createStatement();
+            Statement statement = connection.createStatement();
             statement.setQueryTimeout(timeout);
 //            System.out.println("Adding User: " + user + ", Password: " + password);
             statement.executeUpdate("insert into " + dataBaseTableName + " (name, password) values('" + user + "','" + generateSecurePassword(password) + "')");
@@ -159,8 +159,45 @@ public class DB {
             }
         }
     }
+        
+        
+        
+        
+    public boolean isNameUnique(String userName) throws SQLException, ClassNotFoundException
+    {
+        boolean unique = true;
+        
+        Class.forName("org.sqlite.JDBC");
+            connection = DriverManager.getConnection(fileName);
+            var statement = connection.createStatement();
+            statement.setQueryTimeout(timeout);
+            ResultSet rs = statement.executeQuery("select name from " + this.dataBaseTableName);
+            // Let's iterate through the java ResultSet
+            while (rs.next()) {
+                if (userName.equals(rs.getString("name"))) {
+                    unique = false;
+                    break;
+                }
+            }
+        
+        
+        return unique;
+    }    
+    
+    
+    
+    public void deleteUser(String userName) throws SQLException, ClassNotFoundException
+    {
+        Class.forName("org.sqlite.JDBC");
+            connection = DriverManager.getConnection(fileName);
+            var statement = connection.createStatement();
+            statement.setQueryTimeout(timeout);
+            statement.executeQuery("DELETE FROM " + this.dataBaseTableName + " WHERE name="+userName);
+    } 
 
     /**
+     * @return result
+     * @throws java.lang.ClassNotFoundException
      * @brief get data from the Database method
      * @retunr results as ResultSet
      */

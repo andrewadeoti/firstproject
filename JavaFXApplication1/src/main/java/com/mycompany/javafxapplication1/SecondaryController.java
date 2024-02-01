@@ -72,6 +72,8 @@ public class SecondaryController {
     
     private String[] userCredentials;
     
+    
+    
     @FXML
     private void selectBtnHandler(ActionEvent event) throws IOException {
         Stage primaryStage = (Stage) selectBtn.getScene().getWindow();
@@ -136,50 +138,22 @@ public class SecondaryController {
         }
     }
     
-    //console functions
-    
-    @FXML
-    private void lsConsole(ActionEvent event) throws IOException, InterruptedException
-    {
-        var console = new ConsoleInput();
-        String output = console.ls("");
-        textOutput.setText("Output: "+output);
-        Source.setText("");
-        Destination.setText("");
-    }
-    
-    @FXML
-    private void treeConsole(ActionEvent event) throws IOException, InterruptedException
-    {
-        var console = new ConsoleInput();
-        String output = console.tree();
-        textOutput.setText("Output: "+output);
-        Source.setText("");
-        Destination.setText("");
-    }
-    
-    
-    //system function
-    @FXML
-    private void whoAmIConsole(ActionEvent event) throws IOException, InterruptedException
-    {
-        var console = new ConsoleInput();
-        String output = console.whoami();
-        textOutput.setText("Output: "+output);
-    }
-    
-    @FXML
-    private void psConsole(ActionEvent event) throws IOException, InterruptedException
-    {
-        var console = new ConsoleInput();
-        String output = console.ps();
-        textOutput.setText("Output: "+output);
-    }
-    
     
     
     //file funcitons
-
+    @FXML
+    private void deleteCurrentUser(ActionEvent event) throws IOException, InterruptedException, SQLException, ClassNotFoundException
+    {
+        FXMLLoader loader = new FXMLLoader();
+        DB myObj = new DB();
+        try {
+            myObj.deleteUser(userCredentials[0]);
+            switchToPrimary();
+        } catch (Exception e) {
+            switchToPrimary();
+        }
+        
+    }
     
     
     
@@ -218,34 +192,6 @@ public class SecondaryController {
         textOutput.setText(output);
         Destination.setText("");
     }
-    
-    
-    @FXML
-    private void moveFileConsole(ActionEvent event) throws IOException, InterruptedException
-    {
-        var console = new ConsoleInput();
-        String output = console.mv(Source.getText(),Destination.getText());
-        textOutput.setText("Output: "+output);
-    }
-    
-    @FXML
-    private void copyFileConsole(ActionEvent event) throws IOException, InterruptedException
-    {
-        var console = new ConsoleInput();
-        String output = console.cp(Source.getText(),Destination.getText());
-        textOutput.setText("Output: "+output);
-    }
-    
-    @FXML
-    private void makeFolderConsole(ActionEvent event) throws IOException, InterruptedException
-    {
-        var console = new ConsoleInput();
-        String output = console.mkdir(Source.getText());  
-        textOutput.setText("Output: "+output);
-        Destination.setText("");
-    }
-    
-    
 
     public void initialise(String[] credentials) {
         userCredentials = credentials;

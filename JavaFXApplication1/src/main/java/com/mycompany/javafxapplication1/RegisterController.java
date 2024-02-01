@@ -48,27 +48,7 @@ public class RegisterController {
 
     @FXML
     private TextField userTextField;
-    
-    @FXML
-    private Text fileText;
-    
-    @FXML
-    private Button selectBtn;
-    
-    @FXML
-    private void selectBtnHandler(ActionEvent event) throws IOException {
-        Stage primaryStage = (Stage) selectBtn.getScene().getWindow();
-        primaryStage.setTitle("Select a File");
 
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Open Resource File");
-        File selectedFile = fileChooser.showOpenDialog(primaryStage);
-        
-        if(selectedFile!=null){
-            fileText.setText((String)selectedFile.getCanonicalPath());
-        }
-        
-    }
 
     private void dialogue(String headerMsg, String contentMsg) {
         Stage secondaryStage = new Stage();
@@ -83,12 +63,12 @@ public class RegisterController {
 
     @FXML
     private void registerBtnHandler(ActionEvent event) {
-        Stage secondaryStage = new Stage();
-        Stage primaryStage = (Stage) registerBtn.getScene().getWindow();
         try {
-            FXMLLoader loader = new FXMLLoader();
             DB myObj = new DB();
-            if (passPasswordField.getText().equals(rePassPasswordField.getText())) {
+            if (passPasswordField.getText().equals(rePassPasswordField.getText()) && myObj.isNameUnique(userTextField.getText())) {
+                Stage secondaryStage = new Stage();
+                Stage primaryStage = (Stage) registerBtn.getScene().getWindow();
+                FXMLLoader loader = new FXMLLoader();
                 myObj.addDataToDB(userTextField.getText(), passPasswordField.getText());
                 System.out.println(myObj);
                 dialogue("Adding information to the database", "Successful!");
@@ -102,15 +82,19 @@ public class RegisterController {
                 controller.initialise(credentials);
                 String msg = "some data sent from Register Controller";
                 secondaryStage.setUserData(msg);
+                secondaryStage.show();
+                primaryStage.close();
             } else {
-                loader.setLocation(getClass().getResource("register.fxml"));
-                Parent root = loader.load();
-                Scene scene = new Scene(root, 640, 480);
-                secondaryStage.setScene(scene);
-                secondaryStage.setTitle("Register a new User");
+                if (passPasswordField.getText().equals(rePassPasswordField.getText())) {
+                    dialogue("User already exists", "Please try a different username");
+
+                } else {
+                    dialogue("Passwords don't match", "Please enter the same password into each box");
+
+                }
+
+                backLoginBtnHandler();
             }
-            secondaryStage.show();
-            primaryStage.close();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -118,7 +102,7 @@ public class RegisterController {
     }
 
     @FXML
-    private void backLoginBtnHandler(ActionEvent event) {
+    private void backLoginBtnHandler() {
         Stage secondaryStage = new Stage();
         Stage primaryStage = (Stage) backLoginBtn.getScene().getWindow();
         try {
