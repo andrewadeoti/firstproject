@@ -162,7 +162,7 @@ public class DB {
         
         
         
-        
+    //checks the database to see if it contains a username the same as the one trying to be registered    
     public boolean isNameUnique(String userName) throws SQLException, ClassNotFoundException
     {
         boolean unique = true;

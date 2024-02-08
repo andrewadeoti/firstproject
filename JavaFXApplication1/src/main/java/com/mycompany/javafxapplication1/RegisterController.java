@@ -85,6 +85,7 @@ public class RegisterController {
                 secondaryStage.show();
                 primaryStage.close();
             } else {
+                //if the passwords are the same then the error must be the username
                 if (passPasswordField.getText().equals(rePassPasswordField.getText())) {
                     dialogue("User already exists", "Please try a different username");
 

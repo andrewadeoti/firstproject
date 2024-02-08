@@ -166,6 +166,8 @@ public class SecondaryController {
         Destination.setText("");
     }
     
+    
+    //these functions call the file parts of the consoleInput file
     @FXML
     private void deleteFileConsole(ActionEvent event) throws IOException, InterruptedException
     {

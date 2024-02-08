@@ -48,6 +48,8 @@ public class ConsoleController{
     
     //console functions
     
+    //each function useds the ConsoleInput file to run functions running console commands
+    
     @FXML
     private void lsConsole(ActionEvent event) throws IOException, InterruptedException
     {
@@ -156,7 +158,7 @@ public class ConsoleController{
     }
     
     
-    //Return to main scene button
+    //Returns view to main scene (secondary view)
     
     @FXML
     private void openMainBtnHandler(ActionEvent event) {
