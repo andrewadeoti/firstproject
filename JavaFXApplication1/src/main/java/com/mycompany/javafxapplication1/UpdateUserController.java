@@ -54,7 +54,7 @@ public class UpdateUserController implements Initializable {
 
     @FXML
     private Button backLoginBtn;
-     @FXML
+    @FXML
     private Button updatepasswordBtn;
     
     @FXML

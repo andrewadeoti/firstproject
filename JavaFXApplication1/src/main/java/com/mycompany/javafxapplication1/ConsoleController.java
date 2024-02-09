@@ -48,6 +48,11 @@ public class ConsoleController{
     
     //console functions
     //each function useds the ConsoleInput file to run functions running console commands
+     @FXML
+    private Button nanoBtn;
+    
+    @FXML
+    private Button consoleNanoBtn;
     
     @FXML
     private void lsConsole(ActionEvent event) throws IOException, InterruptedException
@@ -87,6 +92,18 @@ public class ConsoleController{
         textOutput.setText("Output: "+output);
     }
     
+    
+    @FXML
+    private void nanoConsole(ActionEvent event) throws IOException, InterruptedException
+    {
+//        var console = new ConsoleInput();
+//        String output = console.nano();
+//        textOutput.setText("Output: "+output);
+        String terminal = "terminator";
+        String nanoCmd = "nano";
+        var processBuilder = new ProcessBuilder(terminal, "-e", nanoCmd);
+        processBuilder.start();
+    }
     
     
     //file funcitons
